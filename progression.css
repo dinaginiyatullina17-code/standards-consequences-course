@@ -1,4 +1,15 @@
 [hidden] { display: none !important; }
+.comic-sequence { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin: 20px 0; }
+.comic-panel { margin: 0; overflow: hidden; border: 1px solid #ddd4f5; border-radius: 18px; background: white; }
+.comic-scene { position: relative; aspect-ratio: 2 / 3; overflow: hidden; background: #f1eafa; }
+.comic-scene img { position: absolute; top: 0; width: 300%; max-width: none; height: 100%; }
+.comic-number { position: absolute; top: 12px; left: 12px; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: #49316f; color: white; font-weight: 700; }
+.comic-reading { position: absolute; top: 20%; left: 53%; transform: translate(-50%,-50%) rotate(4deg); color: #251939; font-size: clamp(18px,2vw,26px); font-weight: 800; white-space: nowrap; }
+.comic-panel figcaption { padding: 16px; }
+.comic-panel figcaption strong { display: block; font-size: 18px; line-height: 1.3; }
+.comic-panel figcaption p { margin: 10px 0 0; font-size: 14px; line-height: 1.55; }
+.comic-panel:last-child figcaption { border-top: 3px solid #ee6380; }
+@media(max-width: 650px) { .comic-sequence { grid-template-columns: 1fr; } .comic-panel { display: grid; grid-template-columns: 42% minmax(0,1fr); } .comic-scene { align-self: start; } .comic-panel figcaption { padding: 12px; } .comic-panel figcaption strong { font-size: 16px; } .comic-panel figcaption p,.comic-panel .kf-label { font-size: 13px; } .comic-reading { font-size: 14px; } .comic-panel:last-child figcaption { border-top: 0; border-left: 3px solid #ee6380; } }
 .chain-panel.open { max-height: none; }
 .chain-toggle { scroll-margin-top: 80px; }
 .chain-group-title { margin: 36px 0 20px; color: #49316f; font-size: clamp(22px, 3vw, 30px); line-height: 1.25; }
