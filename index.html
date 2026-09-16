@@ -110,7 +110,8 @@
 
         <div class="section-heading fade-in">
           <h3>Пирамида последствий</h3>
-          <p>Чем выше уровень, тем тяжелее цена пропущенного нарушения. Нажми на уровень, чтобы увидеть связь.</p>
+          <p>Чем выше уровень, тем тяжелее цена пропущенного нарушения.</p>
+          <p class="reveal-prompt"><strong>Нажми на уровень, чтобы увидеть связь.</strong><br>Раскрой все четыре уровня пирамиды.</p>
         </div>
         <div class="consequence-pyramid fade-in" aria-label="Пирамида последствий нарушений">
           <button class="pyramid-level level-4" type="button" onclick="selectConsequence(this, 'Смерть Гостя — крайнее последствие опасной цепочки, которую не остановили вовремя.')"><span>Смерть Гостя</span></button>
@@ -222,7 +223,7 @@
             <div class="feedback-box match-question-feedback" id="match-feedback-1" aria-live="polite"></div>
           </div>
 
-          <p class="continue-note">На каждый вопрос — три попытки. После первой и второй ошибок появится подсказка, после третьей — верный вариант с объяснением. Чтобы идти дальше, раскрой все уровни пирамиды и все примеры, затем заверши оба вопроса.</p>
+          <p class="continue-note">На каждый вопрос — две попытки. После первой ошибки появится подсказка, после второй — верный вариант с объяснением. Чтобы идти дальше, раскрой все уровни пирамиды и все примеры, затем заверши оба вопроса.</p>
         </div>
 
         <div class="next-row"><button class="btn-next" type="button" onclick="goNext('consequences', 'control')">К контролю сотрудников <span aria-hidden="true">→</span></button></div>
@@ -307,7 +308,7 @@
 
         <div class="section-heading fade-in">
           <h3>Собери 7 шагов в правильном порядке</h3>
-          <p>Расставь карточки перетаскиванием или кнопками со стрелками. На проверку порядка — три попытки.</p>
+          <p>Расставь карточки перетаскиванием или кнопками со стрелками. На проверку порядка — две попытки.</p>
         </div>
         <div class="sortable-list fade-in" id="sortable-list">
           <div class="sort-item" draggable="true" data-idx="2"><span class="sort-handle" aria-hidden="true">⠿</span><span>Дай обратную связь по ФПР</span></div>
@@ -354,12 +355,14 @@
           <p class="trainer-eyebrow">Практика на смене</p>
           <h3 id="trainer-title">От замечания — к исправлению ошибки</h3>
           <p>Час пик. Сотрудник торопится и достаёт картошку раньше сигнала. Пройди все семь шагов: выбери действия менеджера и подходящую обратную связь.</p>
-          <p class="trainer-rules">На каждом шаге — три попытки. После первой и второй ошибок получишь подсказку, после третьей увидишь верный вариант и объяснение.</p>
           <p id="trainer-progress" class="trainer-progress" aria-live="polite"></p>
           <h4 id="trainer-question" tabindex="-1"></h4>
           <div id="trainer-options" class="match-options"></div>
           <div id="trainer-feedback" class="feedback-box" role="status"></div>
-          <button id="trainer-next" class="btn-next" type="button" onclick="nextTrainerStep()" disabled>Следующий шаг →</button>
+          <div class="trainer-navigation">
+            <button id="trainer-back" class="btn-secondary" type="button" onclick="previousTrainerStep()" hidden>← Предыдущий шаг</button>
+            <button id="trainer-next" class="btn-next" type="button" onclick="nextTrainerStep()" disabled>Следующий шаг →</button>
+          </div>
           <div id="trainer-summary" class="trainer-summary" hidden>
             <h4>Ты прошёл весь управленческий цикл</h4>
             <p>Заметь нарушение → останови риск → дай ОС по ФПР → покажи правильное действие → дай потренироваться → передай информацию → проверь через несколько дней.</p>

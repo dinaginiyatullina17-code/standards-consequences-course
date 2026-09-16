@@ -1,4 +1,9 @@
 [hidden] { display: none !important; }
+.course-back { margin: 0 0 24px; }
+.reveal-prompt { padding: 18px 22px; border: 2px solid #7968e8; border-left-width: 6px; border-radius: 14px; background: #eee8fc; color: #49316f !important; line-height: 1.6; }
+.reveal-prompt strong { font-size: 19px; }
+.trainer-navigation { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 24px; }
+.trainer-navigation .btn-next { margin-top: 0; }
 .chapter-gate { margin: 32px 0 12px; padding: 16px 20px; background: #f0ecfa; border-radius: 16px; color: #493b68; font-size: 15px; line-height: 1.5; }
 .btn-next:disabled, .btn-check:disabled { opacity: .48; cursor: not-allowed; transform: none; }
 .was-read { box-shadow: inset 4px 0 #7968e8; }
