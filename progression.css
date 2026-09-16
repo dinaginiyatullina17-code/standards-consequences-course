@@ -1,4 +1,8 @@
 [hidden] { display: none !important; }
+.chain-panel.open { max-height: none; }
+.chain-toggle { scroll-margin-top: 80px; }
+.chain-group-title { margin: 36px 0 20px; color: #49316f; font-size: clamp(22px, 3vw, 30px); line-height: 1.25; }
+.kf-label { display: block; margin-top: 12px; padding: 8px 10px; border-radius: 10px; background: #ece5fc; color: #49316f; font-size: 13px; line-height: 1.45; font-weight: 700; overflow-wrap: anywhere; }
 .course-back { margin: 0 auto 0 0; }
 .course-navigation { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
 .course-navigation .btn-next { margin-left: auto; }

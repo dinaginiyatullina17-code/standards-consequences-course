@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="kuds/css/kuds.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="ms-restoran.css">
-  <link rel="stylesheet" href="progression.css?v=22">
+  <link rel="stylesheet" href="progression.css?v=24">
 </head>
 <body class="is-home">
   <header id="top-nav" class="home-nav-hidden" aria-label="Навигация по курсу">
@@ -125,20 +125,37 @@
           <h3 class="section-heading__title">Реальные цепочки на смене</h3>
           <p class="reveal-prompt"><strong>Раскрой каждую цепочку.</strong><br>Нажми на название примера или на «+», чтобы увидеть, к чему приводит нарушение.</p>
         </div>
-        <div class="chain-infographics fade-in">
-          <article class="chain-infographic chain-infographic--risk">
-            <button class="chain-toggle" type="button" onclick="toggleChain(this)" aria-expanded="false"><span class="chain-infographic__head"><strong>Синие щипцы</strong></span><span class="chain-plus" aria-hidden="true">+</span></button>
-            <div class="chain-panel"><div class="chain-panel__inner">
-            <p class="chain-detail">Например, сотрудник на станции Универсальная Жаровня торопится. Поэтому достает готовые стрипсы из корзины щипцами синего цвета вместо красных. Бактерии с сырого продукта попадают на готовые стрипсы весь час пик. Из 150 Гостей 45 заказывали стрипсы или блюда с ними. Это приведет к череде серьезных отравлений в ресторане.</p>
-            <div class="chain-flow" aria-label="Цепочка последствий: синие щипцы">
-              <div class="chain-step"><strong>Спешка</strong><small>Сотрудник торопится</small></div><span class="chain-arrow" aria-hidden="true">→</span>
-              <div class="chain-step"><strong>Не тот инвентарь</strong><small>Синие щипцы вместо красных</small></div><span class="chain-arrow" aria-hidden="true">→</span>
-              <div class="chain-step"><strong>Перекрёстное загрязнение</strong><small>Бактерии попадают на готовые стрипсы</small></div><span class="chain-arrow" aria-hidden="true">→</span>
-              <div class="chain-step chain-step--result"><strong>Отравления</strong><small>45 Гостей могли отравиться стрипсами</small></div>
-            </div>
-            </div></div>
-          </article>
-          <article class="chain-infographic chain-infographic--safety">
+        <p class="body-text">Одно нарушение может запустить цепочку последствий. В примерах о пищевой безопасности отмечены КФ — важнейшие факторы безопасности пищевых продуктов. Другие примеры показывают, как стандарты защищают сотрудников и качество продукта.</p>
+        <h4 class="chain-group-title">Безопасность пищевых продуктов</h4>
+        <div class="chain-infographics"><article class="chain-infographic chain-infographic--risk">
+<button class="chain-toggle" type="button" onclick="toggleChain(this)" aria-expanded="false"><span class="chain-infographic__head"><strong>Синие щипцы</strong></span><span class="chain-plus" aria-hidden="true">+</span></button>
+<div class="chain-panel"><div class="chain-panel__inner"><p class="chain-detail">В час пик сотрудник берёт готовые стрипсы синими щипцами вместо красных. Одно неверное действие создаёт риск переноса загрязнения с сырого продукта на готовый.</p>
+<div class="chain-flow" aria-label="Цепочка последствий: Синие щипцы"><div class="chain-step"><strong>Спешка</strong><small>Сотрудник торопится на станции</small></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step"><strong>Не те щипцы</strong><small>Готовые стрипсы берут синими щипцами вместо красных</small><span class="kf-label">КФ 2 · Защита от загрязнений</span></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step"><strong>Перенос загрязнения</strong><small>Загрязнение с сырого продукта попадает на готовый</small></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step chain-step--result"><strong>Продукт получает Гость</strong><small>Возможное последствие — отравление</small></div></div></div></div></article>
+<article class="chain-infographic chain-infographic--risk">
+<button class="chain-toggle" type="button" onclick="toggleChain(this)" aria-expanded="false"><span class="chain-infographic__head"><strong>Контакт с рыбой и креветками</strong></span><span class="chain-plus" aria-hidden="true">+</span></button>
+<div class="chain-panel"><div class="chain-panel__inner"><p class="chain-detail">Креветки берут только щипцами, а не руками. Это не отменяет требований к мытью рук после работы с рыбой и креветками и соблюдения процедур работы с аллергенами.</p>
+<div class="chain-flow" aria-label="Цепочка последствий: Контакт с рыбой и креветками"><div class="chain-step"><strong>Час пик</strong><small>Сотрудник переключается между операциями</small></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step"><strong>Пропущено мытьё рук</strong><small>После работы с рыбой и креветками сотрудник не моет руки</small><span class="kf-label">КФ 1 · Правила личной гигиены</span></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step"><strong>Перенос аллергена</strong><small>Аллерген попадает в другое блюдо</small><span class="kf-label">КФ 2 · Защита от загрязнений</span></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step chain-step--result"><strong>Блюдо получает Гость с аллергией</strong><small>Возможное последствие — аллергическая реакция</small></div></div></div></div></article>
+<article class="chain-infographic chain-infographic--risk">
+<button class="chain-toggle" type="button" onclick="toggleChain(this)" aria-expanded="false"><span class="chain-infographic__head"><strong>Старая и свежая продукция в PHU</strong></span><span class="chain-plus" aria-hidden="true">+</span></button>
+<div class="chain-panel"><div class="chain-panel__inner"><p class="chain-detail">Сотрудник хочет быстрее пополнить запас продукции и добавляет свежую к старой. Новый отсчёт времени не делает старую продукцию свежей.</p>
+<div class="chain-flow" aria-label="Цепочка последствий: Старая и свежая продукция в PHU"><div class="chain-step"><strong>Пополнение запаса</strong><small>Нужно быстро подготовить продукцию к выдаче</small></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step"><strong>Смешивание партий</strong><small>Свежую продукцию добавляют к старой и начинают отсчёт заново</small><span class="kf-label">КФ 8 · Правила хранения</span></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step"><strong>Потеря контроля срока</strong><small>Фактический срок хранения старой продукции становится незаметен</small></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step chain-step--result"><strong>Выдача после окончания срока</strong><small>Гость получает продукт, безопасность которого не обеспечена</small></div></div></div></div></article>
+<article class="chain-infographic chain-infographic--risk">
+<button class="chain-toggle" type="button" onclick="toggleChain(this)" aria-expanded="false"><span class="chain-infographic__head"><strong>Пропущенный замер температуры</strong></span><span class="chain-plus" aria-hidden="true">+</span></button>
+<div class="chain-panel"><div class="chain-panel__inner"><p class="chain-detail">Во время загрузки менеджер пропускает предусмотренный процедурой замер температуры котлет, а в журнал вносят значение без фактической проверки. Запись не заменяет замер.</p>
+<div class="chain-flow" aria-label="Цепочка последствий: Пропущенный замер температуры"><div class="chain-step"><strong>Экономия времени</strong><small>В час пик проверку откладывают</small></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step"><strong>Пропущен замер</strong><small>Температуру котлет, приготовленных в жарочном шкафу, не проверяют</small><span class="kf-label">КФ 4 · Замер температуры котлет, приготовленных в жарочном шкафу</span></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step"><strong>Запись без проверки</strong><small>В журнал вносят значение без фактического замера</small><span class="kf-label">КФ 6 · Системы безопасности пищевых продуктов</span></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step chain-step--result"><strong>Отклонение не замечено</strong><small>Гостю могут выдать продукт, не прошедший необходимую проверку</small></div></div></div></div></article>
+<article class="chain-infographic chain-infographic--risk">
+<button class="chain-toggle" type="button" onclick="toggleChain(this)" aria-expanded="false"><span class="chain-infographic__head"><strong>Признаки вредителей</strong></span><span class="chain-plus" aria-hidden="true">+</span></button>
+<div class="chain-panel"><div class="chain-panel__inner"><p class="chain-detail">Сотрудник замечает признаки вредителей, но откладывает сообщение менеджеру. Пока проблема остаётся без реакции, сохраняется риск загрязнения.</p>
+<div class="chain-flow" aria-label="Цепочка последствий: Признаки вредителей"><div class="chain-step"><strong>Сигнал замечен</strong><small>Сотрудник видит признаки вредителей</small></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step"><strong>Сообщение отложено</strong><small>Менеджер не получает информацию вовремя</small><span class="kf-label">КФ 3 · Проблемы с вредителями</span></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step"><strong>Риск загрязнения</strong><small>Продукты и поверхности могут быть загрязнены</small></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step chain-step--result"><strong>Риск для Гостя</strong><small>Небезопасная продукция может попасть к Гостю</small></div></div></div></div></article>
+<article class="chain-infographic chain-infographic--risk">
+<button class="chain-toggle" type="button" onclick="toggleChain(this)" aria-expanded="false"><span class="chain-infographic__head"><strong>Неутверждённое средство для уборки</strong></span><span class="chain-plus" aria-hidden="true">+</span></button>
+<div class="chain-panel"><div class="chain-panel__inner"><p class="chain-detail">Средство для уборки закончилось. Сотрудник предлагает без согласования заменить его средством из ближайшего магазина.</p>
+<div class="chain-flow" aria-label="Цепочка последствий: Неутверждённое средство для уборки"><div class="chain-step"><strong>Средство закончилось</strong><small>Нужно продолжить уборку</small></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step"><strong>Неутверждённая замена</strong><small>Используют средство, не утверждённое для ресторана</small><span class="kf-label">КФ 5 · Официальные поставщики</span></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step"><strong>Процедура не обеспечена</strong><small>Нельзя считать, что установленная процедура очистки и дезинфекции соблюдена</small></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step chain-step--result"><strong>Риск загрязнения</strong><small>Поверхности и продукты могут оказаться загрязнены</small></div></div></div></div></article>
+<article class="chain-infographic chain-infographic--risk">
+<button class="chain-toggle" type="button" onclick="toggleChain(this)" aria-expanded="false"><span class="chain-infographic__head"><strong>Трещина в плэйте PHU</strong></span><span class="chain-plus" aria-hidden="true">+</span></button>
+<div class="chain-panel"><div class="chain-panel__inner"><p class="chain-detail">Сотрудник замечает трещину, но продолжает использовать плэйт. Повреждённая поверхность остаётся в контакте с продуктом.</p>
+<div class="chain-flow" aria-label="Цепочка последствий: Трещина в плэйте PHU"><div class="chain-step"><strong>Повреждение замечено</strong><small>В плэйте PHU появилась трещина</small></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step"><strong>Использование продолжается</strong><small>Повреждённая поверхность контактирует с продуктом</small><span class="kf-label">КФ 7 · Защита оборудования от загрязнений</span></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step"><strong>Риск посторонних частиц</strong><small>Частицы повреждённого материала могут попасть в еду</small></div><span class="chain-arrow" aria-hidden="true">→</span><div class="chain-step chain-step--result"><strong>Последствие для Гостя</strong><small>Гость может получить продукт с посторонним предметом</small></div></div></div></div></article>
+</div><h4 class="chain-group-title">Безопасность сотрудников</h4><div class="chain-infographics"><article class="chain-infographic chain-infographic--safety">
             <button class="chain-toggle" type="button" onclick="toggleChain(this)" aria-expanded="false"><span class="chain-infographic__head"><strong>Крышка фритюра</strong></span><span class="chain-plus" aria-hidden="true">+</span></button>
             <div class="chain-panel"><div class="chain-panel__inner">
             <p class="chain-detail">Или, например, ты будешь игнорировать, что сотрудники ставят крышку от фритюрных ванн над ваннами. Да, так удобней и быстрее. Но если фритюрное масло загорится, сотрудник не сможет для тушения возгорания протянуть руку к крышке через горящую ванну. В итоге сотрудник получит серьезные ожоги и попадет в больницу.</p>
@@ -150,31 +167,7 @@
             </div>
             </div></div>
           </article>
-          <article class="chain-infographic chain-infographic--allergen">
-            <button class="chain-toggle" type="button" onclick="toggleChain(this)" aria-expanded="false"><span class="chain-infographic__head"><strong>Контакт с рыбой и креветками</strong></span><span class="chain-plus" aria-hidden="true">+</span></button>
-            <div class="chain-panel"><div class="chain-panel__inner">
-            <p class="chain-detail">В погоне за скоростью обслуживания можно пропустить, что сотрудники не моют руки после работы с рыбой и креветками. Важно: креветки берут только щипцами, а не руками. Использование щипцов не отменяет требования мыть руки после работы с этими продуктами. Если нарушать правила, аллергены могут попасть в другие блюда и вызвать реакцию у Гостя.</p>
-            <div class="chain-flow" aria-label="Цепочка последствий: контакт с рыбой и креветками">
-              <div class="chain-step"><strong>Погоня за скоростью</strong><small>Нарушение остаётся без реакции</small></div><span class="chain-arrow" aria-hidden="true">→</span>
-              <div class="chain-step"><strong>Нет мытья рук</strong><small>После работы с рыбой и креветками</small></div><span class="chain-arrow" aria-hidden="true">→</span>
-              <div class="chain-step"><strong>Перенос аллергена</strong><small>Аллерген попадает в следующее блюдо</small></div><span class="chain-arrow" aria-hidden="true">→</span>
-              <div class="chain-step chain-step--result"><strong>Реакция Гостя</strong><small>Риск для здоровья</small></div>
-            </div>
-            </div></div>
-          </article>
-          <article class="chain-infographic chain-infographic--quality">
-            <button class="chain-toggle" type="button" onclick="toggleChain(this)" aria-expanded="false"><span class="chain-infographic__head"><strong>Картошка раньше сигнала</strong></span><span class="chain-plus" aria-hidden="true">+</span></button>
-            <div class="chain-panel"><div class="chain-panel__inner">
-            <p class="chain-detail">Когда сотрудники раньше достают картошку из масла, заказ собирается быстро. Но Гости, недовольные вкусом получившейся картошки, тоже быстро напишут негативные отзывы в ресторан.</p>
-            <div class="chain-flow" aria-label="Цепочка последствий: картошка раньше сигнала">
-              <div class="chain-step"><strong>Спешка</strong><small>Картошку достают раньше сигнала</small></div><span class="chain-arrow" aria-hidden="true">→</span>
-              <div class="chain-step"><strong>Не тот стандарт</strong><small>Продукт не успевает приготовиться</small></div><span class="chain-arrow" aria-hidden="true">→</span>
-              <div class="chain-step"><strong>Недовольство</strong><small>Гостю не нравится вкус</small></div><span class="chain-arrow" aria-hidden="true">→</span>
-              <div class="chain-step chain-step--result"><strong>Негативный отзыв</strong><small>Гость пишет о ресторане</small></div>
-            </div>
-            </div></div>
-          </article>
-          <article class="chain-infographic chain-infographic--employee">
+<article class="chain-infographic chain-infographic--employee">
             <button class="chain-toggle" type="button" onclick="toggleChain(this)" aria-expanded="false"><span class="chain-infographic__head"><strong>Нарезание томатов без защитных перчаток</strong></span><span class="chain-plus" aria-hidden="true">+</span></button>
             <div class="chain-panel"><div class="chain-panel__inner">
             <p class="chain-detail">Стандарты защищают не только Гостей, но и сотрудников. При нарезании помидоров без защитных перчаток достаточно одного неловкого движения, чтобы получить серьёзную травму на производстве.</p>
@@ -186,7 +179,7 @@
             </div>
             </div></div>
           </article>
-          <article class="chain-infographic chain-infographic--employee">
+<article class="chain-infographic chain-infographic--employee">
             <button class="chain-toggle" type="button" onclick="toggleChain(this)" aria-expanded="false"><span class="chain-infographic__head"><strong>Перчатки у фритюра и бройлера</strong></span><span class="chain-plus" aria-hidden="true">+</span></button>
             <div class="chain-panel"><div class="chain-panel__inner">
             <p class="chain-detail">Работать в перчатках у фритюра и бройлера запрещено стандартом. Горячее масло у фритюра и нагретые поверхности бройлера создают риск термического ожога.</p>
@@ -197,9 +190,18 @@
               <div class="chain-step chain-step--result"><strong>Термический ожог</strong><small>Сотруднику может потребоваться медицинская помощь</small></div>
             </div>
             </div></div>
-          </article>
-        </div>
-
+          </article></div><h4 class="chain-group-title">Качество продукта</h4><div class="chain-infographics"><article class="chain-infographic chain-infographic--quality">
+            <button class="chain-toggle" type="button" onclick="toggleChain(this)" aria-expanded="false"><span class="chain-infographic__head"><strong>Картошка раньше сигнала</strong></span><span class="chain-plus" aria-hidden="true">+</span></button>
+            <div class="chain-panel"><div class="chain-panel__inner">
+            <p class="chain-detail">Когда сотрудники раньше достают картошку из масла, заказ собирается быстро. Но Гости, недовольные вкусом получившейся картошки, тоже быстро напишут негативные отзывы в ресторан.</p>
+            <div class="chain-flow" aria-label="Цепочка последствий: картошка раньше сигнала">
+              <div class="chain-step"><strong>Спешка</strong><small>Картошку достают раньше сигнала</small></div><span class="chain-arrow" aria-hidden="true">→</span>
+              <div class="chain-step"><strong>Не тот стандарт</strong><small>Продукт не успевает приготовиться</small></div><span class="chain-arrow" aria-hidden="true">→</span>
+              <div class="chain-step"><strong>Недовольство</strong><small>Гостю не нравится вкус</small></div><span class="chain-arrow" aria-hidden="true">→</span>
+              <div class="chain-step chain-step--result"><strong>Негативный отзыв</strong><small>Гость пишет о ресторане</small></div>
+            </div>
+            </div></div>
+          </article></div>
         <div class="callout red fade-in"><p>Как видишь, неприятности и трагедии случаются, даже если всего раз пропустить нарушение стандартов. Что с этим делать?</p></div>
 
         <div class="knowledge-check fade-in">
@@ -448,7 +450,7 @@
     </section>
   </main>
 
-  <script src="script.js?v=22"></script>
-  <script src="progression.js?v=22"></script>
+  <script src="script.js?v=24"></script>
+  <script src="progression.js?v=24"></script>
 </body>
 </html>
