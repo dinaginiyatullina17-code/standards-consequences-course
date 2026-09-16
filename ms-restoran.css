@@ -184,6 +184,7 @@ body.is-home main { padding-top: 0; }
 .chain-infographic--safety, .chain-infographic--quality { border-top-color: var(--ku-contrast); }
 .chain-infographic__head > strong, .chain-infographic__head h4 { color: var(--ku-text); font-family: var(--ku-font-display); font-weight: 750; }
 .chain-infographic__head span, .chain-detail, .chain-step small { color: var(--ku-text-soft); }
+.chain-infographic__head .chain-kf { color: var(--ku-brand-strong); }
 .chain-toggle:hover .chain-infographic__head > strong { color: var(--ku-contrast); }
 .chain-plus, .chain-arrow { color: var(--ku-brand); }
 .chain-flow { padding: var(--ku-space-s); border: 1px solid color-mix(in srgb, var(--ku-brand) 26%, var(--ku-border)); border-radius: var(--ku-radius-l); background: color-mix(in srgb, var(--ku-brand) 14%, var(--ku-card)); }

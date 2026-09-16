@@ -747,10 +747,11 @@ main { padding-top: 52px; }
 .chain-infographic--safety { border-top: 5px solid #a52c18; }
 .chain-infographic--allergen { border-top: 5px solid #b36a36; }
 .chain-infographic--quality { border-top: 5px solid #f6a22a; }
-.chain-infographic__head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.chain-infographic__head { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
 .chain-infographic__head h4 { margin: 0; font-family: var(--font-head); font-size: clamp(22px, 3vw, 28px); line-height: 1.1; }
 .chain-infographic__head > strong { color: var(--c-ink); font-family: var(--font-head); font-size: clamp(22px, 3vw, 28px); line-height: 1.1; }
 .chain-infographic__head span { color: #9b8276; font-size: 13px; text-align: right; }
+.chain-infographic__head .chain-kf { color: var(--c-brand-dk); font-size: 14px; font-weight: 700; line-height: 1.35; text-align: left; }
 .chain-toggle { width: 100%; display: flex; align-items: center; gap: 16px; padding: 0; border: 0; background: transparent; color: inherit; cursor: pointer; text-align: left; }
 .chain-toggle:hover .chain-infographic__head > strong { color: var(--c-brand-dk); }
 .chain-toggle:focus-visible { outline-offset: 6px; }
