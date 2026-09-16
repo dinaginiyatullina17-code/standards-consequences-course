@@ -1,4 +1,11 @@
 [hidden] { display: none !important; }
+.final-quiz { margin: 48px 0 28px; padding: clamp(20px,4vw,40px); border: 2px solid #d7cef2; border-radius: 24px; background: #faf8fd; }
+.final-quiz > h3 { margin: 8px 0 10px; font-size: clamp(28px,4vw,40px); }
+.final-question { margin-top: 30px; padding-top: 26px; border-top: 1px solid #d7cef2; }
+.final-question h4 { margin: 0 0 16px; font-size: clamp(18px,2.3vw,22px); line-height: 1.4; }
+.final-question .match-options { display: grid; gap: 10px; }
+.final-question .match-btn { width: 100%; white-space: normal; text-align: left; line-height: 1.45; }
+.final-quiz-status { margin: 28px 0 0; padding: 16px 18px; border-radius: 14px; background: #eee8fc; color: #49316f; font-weight: 700; }
 .chain-panel.open { max-height: none; }
 .chain-toggle { scroll-margin-top: 80px; }
 .chain-group-title { margin: 36px 0 20px; color: #49316f; font-size: clamp(22px, 3vw, 30px); line-height: 1.25; }

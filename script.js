@@ -139,7 +139,7 @@ function initFadeIn() {
    ════════════════════════════════════════════════════════════════════════ */
 const PROGRESS_KEY = 'standards_consequences_course_progress';
 // Новая версия начинает маршрут заново: при первом открытии доступно только «Введение».
-const PROGRESS_VERSION = 20;
+const PROGRESS_VERSION = 21;
 const hubDone = [false, false, false];   // флаги пройденных подразделов (если есть)
 
 
@@ -392,7 +392,7 @@ const MATCH_EXPLANATIONS = [
   {
     a: 'Снижение скорости — лишь один из возможных эффектов. Диапазон последствий гораздо шире.',
     b: 'Это часть диапазона, но он начинается с реакции Гостя и может закончиться серьёзным риском для здоровья.',
-    c: 'Верно: одно пропущенное нарушение может привести от огорчения Гостя до больницы и смерти.',
+    c: 'Верно: одно пропущенное нарушение может привести от недовольства Гостя до больницы и смерти.',
   },
 ];
 
@@ -498,6 +498,7 @@ function resetZonePool(poolId, ...zoneIds) {
    локальный флаг, чтобы результат был виден и при локальном открытии. */
 function completeCourse() {
   if (!Object.keys(chapterDone).every(id => chapterReady(id))) return;
+  if (typeof finalQuizReady === 'function' && !finalQuizReady()) return;
   try { localStorage.setItem(PROGRESS_KEY + '_completed', 'passed'); } catch (e) {}
   try {
     if (window.SCORM && typeof SCORM.complete === 'function') {
