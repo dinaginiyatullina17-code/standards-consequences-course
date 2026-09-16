@@ -176,8 +176,16 @@ function loadProgress() {
       learning.trainerStep = Math.max(0, Math.min(6, Number(learning.trainerStep) || 0));
       const firstPending = TRAINING_STEPS.findIndex((_, i) => !answerState('trainer-' + i).done);
       if (firstPending >= 0) learning.trainerStep = Math.min(learning.trainerStep, firstPending);
+    } else {
+      learning = freshLearning();
+      try { localStorage.removeItem(PROGRESS_KEY + '_completed'); } catch (e) {}
+      saveProgress();
     }
-  } catch (e) { learning = freshLearning(); }
+  } catch (e) {
+    learning = freshLearning();
+    try { localStorage.removeItem(PROGRESS_KEY + '_completed'); } catch (storageError) {}
+    saveProgress();
+  }
   ['intro', 'match-0', 'match-1'].forEach(renderChoice);
   document.querySelectorAll('[data-reveal-id]').forEach(btn => btn.classList.toggle('was-read', learning.seen.includes(btn.dataset.revealId)));
   document.querySelectorAll('#shift-practice .closed-choice').forEach(btn => btn.classList.toggle('selected', learning.shift.includes(btn.dataset.key)));
