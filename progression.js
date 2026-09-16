@@ -13,7 +13,23 @@ const TRAINING_STEPS = [
   { title: 'Вернись и проверь', question: 'Через несколько дней ты снова работаешь с этим сотрудником. Чем завершишь цикл?', options: ['Попрошу сотрудника снова описать процедуру и последствия нарушения; если ответит верно, отмечу навык как закреплённый.', 'Понаблюдаю за приготовлением: дожидается ли он сигнала. Если ошибка повторится, снова отреагирую и организую отработку.', 'Сверю отзывы о качестве за последние смены и уточню у коллег, были ли замечания; при отсутствии сигналов закрою вопрос.'], right: 1, hint: 'Проверь действие в реальной работе. Воспоминание о разговоре и отсутствие жалоб не подтверждают соблюдение процедуры.', explanation: 'Цикл завершает проверка поведения на станции. Если ошибка повторилась, нужно снова остановить нарушение и помочь закрепить правильное действие.' }
 ];
 let learning = freshLearning();
-function freshLearning() { return { seen: [], answers: {}, shift: [], order: [], trainerStep: 0, systemOrder: Array.from({length: 3}, () => Math.random() < .5 ? ['right', 'wrong'] : ['wrong', 'right']) }; }
+function freshLearning() {
+  // Исключаем одинаковую позицию верного ответа во всех трёх группах.
+  const pattern = 1 + Math.floor(Math.random() * 6);
+  return { seen: [], answers: {}, shift: [], order: [], trainerStep: 0, systemOrder: Array.from({length: 3}, (_, i) => pattern & (1 << i) ? ['right', 'wrong'] : ['wrong', 'right']) };
+}
+const WRONG_REASONS = {
+  intro: { 0: 'Незначительные последствия — только часть возможных исходов. Нарушение может затронуть здоровье и жизнь Гостя.' },
+  'match-0': { 0: 'Повторение повышает риск, но не является обязательным условием: опасную цепочку может запустить уже одно нарушение.', 2: 'Задержка заказа — возможное последствие. Опасная цепочка может начаться раньше и вообще не сопровождаться задержкой.' },
+  'match-1': { 0: 'Скорость работы и жалоба не охватывают последствия для здоровья и жизни Гостя.', 1: 'Этот вариант описывает часть последствий, но не весь диапазон: от огорчения Гостя до больницы и смерти.' },
+  'trainer-0': { 0: 'Внешний вид порции не подтверждает соблюдение времени приготовления. Уже замеченное извлечение до сигнала является нарушением.', 2: 'Причину полезно выяснить для дальнейшего обучения, но она не меняет факт нарушения процедуры.' },
+  'trainer-1': { 1: 'Ты остановил передачу порции, но отложил объяснение. До разговора сотрудник может повторить то же действие со следующей порцией.', 2: 'Просьба правильно приготовить следующую порцию не останавливает передачу текущей. Внешний вид не заменяет соблюдение процедуры приготовления.' },
+  'trainer-2': { 0: 'В этой фразе есть факт и требуемое действие, но нет последствия: сотруднику не объяснили, как нарушение влияет на продукт.', 1: 'В этой фразе есть последствие, но нет конкретного наблюдаемого факта и точного действия. «Следи за качеством» не объясняет, когда доставать картошку.' },
+  'trainer-3': { 0: 'Пересказ показывает понимание слов, но не заменяет демонстрацию правильного действия на станции.', 2: 'Чтение и обсуждение стандарта полезны, но сотрудник ещё не увидел, как выполнить процедуру в работе.' },
+  'trainer-4': { 1: 'Правильный устный ответ проверяет знания, а не способность выполнить процедуру. Нужна самостоятельная практика под наблюдением.', 2: 'Повторный показ оставляет сотрудника наблюдателем. Пока он сам не повторит действие, нельзя оценить, освоил ли он его.' },
+  'trainer-5': { 0: 'Общее напоминание команде не передаёт, с кем уже провели обучение и какое действие этого сотрудника нужно проверить.', 1: 'Информация об обучении передана, но проверка поставлена в зависимость от жалоб. Наблюдать за соблюдением процедуры нужно и без жалоб.' },
+  'trainer-6': { 0: 'Сотрудник может правильно пересказать процедуру и всё ещё нарушать её в час пик. Проверять нужно действие на станции.', 2: 'Отзывы и сообщения коллег дают косвенные сведения. Отсутствие замечаний не подтверждает, что сотрудник теперь соблюдает процедуру.' }
+};
 function answerState(id) { return learning.answers[id] || { tries: 0, done: false }; }
 function quizConfig(id) {
   if (id.startsWith('trainer-')) {
@@ -49,7 +65,7 @@ function renderChoice(id) {
   if (!state.tries) { fb.className = 'feedback-box'; fb.textContent = ''; return; }
   fb.className = 'feedback-box show ' + (state.done ? 'correct' : 'incorrect');
   fb.textContent = state.correct ? 'Верно. ' + cfg.explanation
-    : state.done ? 'Две попытки использованы. Верный вариант: «' + options[cfg.right].textContent + '». ' + cfg.explanation + ' Можно продолжить после выполнения остальных заданий раздела.'
+    : state.done ? 'Две попытки использованы. Почему выбранный ответ неверен: ' + WRONG_REASONS[id][state.choice] + ' Верный вариант: «' + options[cfg.right].textContent + '». ' + cfg.explanation + ' Можно продолжить после выполнения остальных заданий раздела.'
     : 'Пока неверно. Подсказка: ' + cfg.hint + attemptsHint(state);
 }
 function revealIntro(btn, isCorrect) { submitChoice('intro', isCorrect ? 1 : 0); }
@@ -170,7 +186,10 @@ function checkSortOrder() {
   learning.order = sortOrder();
   const correct = CORRECT_ORDER.every((v, i) => v === learning.order[i]);
   const tries = answerState('sort').tries + 1;
-  learning.answers.sort = { tries, correct, done: correct || tries >= MAX_ATTEMPTS };
+  const mismatch = learning.order.findIndex((value, index) => value !== CORRECT_ORDER[index]);
+  const labels = [...document.querySelectorAll('#sortable-list .sort-item')];
+  const reason = correct ? '' : 'На позиции ' + (mismatch + 1) + ' стоит «' + labels.find(el => Number(el.dataset.idx) === learning.order[mismatch]).children[1].textContent + '», хотя здесь нужно «' + labels.find(el => Number(el.dataset.idx) === CORRECT_ORDER[mismatch]).children[1].textContent + '». Действия должны идти от остановки нарушения к обучению и последующей проверке. ';
+  learning.answers.sort = { tries, correct, done: correct || tries >= MAX_ATTEMPTS, reason };
   if (answerState('sort').done) learning.order = CORRECT_ORDER.slice();
   restoreSort();
   refreshLearning();
@@ -185,7 +204,7 @@ function restoreSort() {
   const fb = document.getElementById('sort-feedback');
   if (!state.tries) return;
   fb.className = 'feedback-box show ' + (state.done ? 'correct' : 'incorrect');
-  fb.textContent = state.correct ? 'Верно. Теперь примени эти семь шагов в тренажёре ниже.' : state.done ? 'Две попытки использованы. Карточки расставлены в верном порядке: заметь → останови риск → дай ОС по ФПР → покажи → потренируй → передай информацию → проверь через несколько дней. Теперь пройди тренажёр.' : 'Подсказка: сначала обнаружь нарушение и останови риск; после объяснения нужны показ и практика. Цикл заканчивается проверкой через несколько дней.' + attemptsHint(state);
+  fb.textContent = state.correct ? 'Верно. Теперь примени эти семь шагов в тренажёре ниже.' : state.done ? 'Две попытки использованы. Почему порядок неверен: ' + state.reason + 'Карточки расставлены в верном порядке: заметь → останови риск → дай ОС по ФПР → покажи → потренируй → передай информацию → проверь через несколько дней. Теперь пройди тренажёр.' : 'Подсказка: сначала обнаружь нарушение и останови риск; после объяснения нужны показ и практика. Цикл заканчивается проверкой через несколько дней.' + attemptsHint(state);
 }
 function moveSort(item, direction) {
   if (answerState('sort').done) return;
@@ -227,8 +246,13 @@ function restoreSystem() {
   document.querySelector('[onclick="checkControlCycle()"]').disabled = !!state.done;
   const fb = document.getElementById('control-feedback');
   if (!state.tries) return;
+  const reasons = [
+    'Наблюдение: проверка только в начале смены и отчёт старшего не заменяют регулярное наблюдение за соблюдением стандарта в работе.',
+    'Реакция: разбор в конце смены не останавливает нарушение в момент, когда оно происходит.',
+    'Проверка: подтверждение понимания не доказывает, что сотрудник выполняет процедуру правильно. Нужно вернуться и посмотреть на его работу.'
+  ].filter((_, i) => state.choice[i] === 'wrong').join(' ');
   fb.className = 'feedback-box show ' + (state.done ? 'correct' : 'incorrect');
-  fb.textContent = state.correct ? 'Верно. Наблюдение, реакция и проверка работают как единый цикл.' : state.done ? 'Две попытки использованы. Верные действия выделены: регулярно проверяй соблюдение стандартов, сразу давай ОС по ФПР, вернись через несколько дней и проверь работу сотрудника. Можно идти дальше.' : 'Подсказка: наблюдай в течение смены, реагируй в момент нарушения, а усвоение процедуры проверяй в работе через несколько дней.' + attemptsHint(state);
+  fb.textContent = state.correct ? 'Верно. Наблюдение, реакция и проверка работают как единый цикл.' : state.done ? 'Две попытки использованы. Почему выбранные ответы неверны: ' + reasons + ' Верные действия выделены: регулярно проверяй соблюдение стандартов, сразу давай ОС по ФПР, вернись через несколько дней и проверь работу сотрудника. Можно идти дальше.' : 'Подсказка: наблюдай в течение смены, реагируй в момент нарушения, а усвоение процедуры проверяй в работе через несколько дней.' + attemptsHint(state);
 }
 function renderTrainer() {
   const i = learning.trainerStep, step = TRAINING_STEPS[i];
@@ -271,7 +295,9 @@ document.addEventListener('DOMContentLoaded', () => {
     back.type = 'button'; back.className = 'btn-secondary course-back';
     back.textContent = i === 0 ? '← К оглавлению' : '← Назад';
     back.addEventListener('click', () => navigateTo(i === 0 ? 'home' : CHAPTER_ORDER[i - 1]));
-    document.querySelector('#page-' + id + ' .content-wrap').prepend(back);
+    const row = document.querySelector('#page-' + id + ' .next-row');
+    row.classList.add('course-navigation');
+    row.prepend(back);
   });
   document.querySelectorAll('.pyramid-level, .chain-toggle').forEach((btn, i) => { btn.dataset.revealId = 'text-' + i; });
   Object.keys(chapterDone).forEach(id => {
@@ -279,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const status = document.createElement('p');
     status.className = 'chapter-gate'; status.id = 'gate-' + id; status.setAttribute('role', 'status');
     row.before(status);
-    row.querySelector('button').setAttribute('aria-describedby', status.id);
+    row.querySelector('.btn-next').setAttribute('aria-describedby', status.id);
   });
   document.querySelectorAll('#sortable-list .sort-item').forEach(item => {
     const controls = document.createElement('span'); controls.className = 'sort-controls';

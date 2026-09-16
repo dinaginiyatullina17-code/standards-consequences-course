@@ -1,5 +1,7 @@
 [hidden] { display: none !important; }
-.course-back { margin: 0 0 24px; }
+.course-back { margin: 0 auto 0 0; }
+.course-navigation { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.course-navigation .btn-next { margin-left: auto; }
 .reveal-prompt { padding: 18px 22px; border: 2px solid #7968e8; border-left-width: 6px; border-radius: 14px; background: #eee8fc; color: #49316f !important; line-height: 1.6; }
 .reveal-prompt strong { font-size: 19px; }
 .trainer-navigation { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 24px; }
