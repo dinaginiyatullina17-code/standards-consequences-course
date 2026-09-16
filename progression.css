@@ -1,0 +1,25 @@
+[hidden] { display: none !important; }
+.chapter-gate { margin: 32px 0 12px; padding: 16px 20px; background: #f0ecfa; border-radius: 16px; color: #493b68; font-size: 15px; line-height: 1.5; }
+.btn-next:disabled, .btn-check:disabled { opacity: .48; cursor: not-allowed; transform: none; }
+.was-read { box-shadow: inset 4px 0 #7968e8; }
+.chain-toggle.was-read .chain-infographic__head::after { content: 'Просмотрено ✓'; margin-left: 12px; font-size: 12px; font-weight: 500; color: #6652bd; }
+.pyramid-level.was-read span::after { content: ' ✓'; }
+.shift-trainer { margin: 48px 0 24px; padding: clamp(20px, 4vw, 40px); border: 2px solid #d7cef2; border-radius: 24px; background: #faf8fd; scroll-margin-top: 90px; }
+.shift-trainer h3 { margin: 8px 0 20px; font-size: clamp(26px, 4vw, 38px); line-height: 1.15; }
+.shift-trainer h4 { margin: 20px 0; font-size: clamp(19px, 2.5vw, 24px); line-height: 1.4; }
+.shift-trainer p { line-height: 1.6; }
+.trainer-eyebrow, .trainer-progress { color: #6652bd; font-weight: 700; }
+.trainer-eyebrow { text-transform: uppercase; font-size: 12px; letter-spacing: .1em; }
+.trainer-rules { font-size: 14px; color: #655c75; }
+.trainer-progress { margin-top: 28px; padding-top: 24px; border-top: 1px solid #d7cef2; }
+.shift-trainer .match-options { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.shift-trainer .match-btn { width: 100%; text-align: left; white-space: normal; line-height: 1.5; }
+.shift-trainer .btn-next { margin-top: 24px; }
+.trainer-summary { margin-top: 24px; padding: 20px; border-radius: 16px; background: #ece7f8; }
+.sort-controls { margin-left: auto; display: flex; gap: 6px; flex-shrink: 0; }
+.sort-controls button { width: 36px; height: 40px; border: 1px solid #d7cef2; border-radius: 8px; background: white; color: #493b68; font-size: 20px; cursor: pointer; }
+.sort-controls button:disabled { opacity: .4; cursor: default; }
+.correct-pick, .system-choice.correct-pick { border-color: #26844c !important; background: #e8f5ed !important; color: #184d2e !important; opacity: 1 !important; }
+.wrong-pick { border-color: #ba4f49 !important; }
+button:focus-visible { outline: 3px solid #7968e8; outline-offset: 3px; }
+@media (max-width: 600px) { .chain-toggle.was-read .chain-infographic__head::after { display: block; margin: 6px 0 0; } .sort-item { flex-wrap: wrap; } .sort-controls { margin-left: auto; } }

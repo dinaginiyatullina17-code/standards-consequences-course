@@ -1,0 +1,284 @@
+/* Обязательный просмотр, три попытки и практика на смене. */
+const MAX_ATTEMPTS = 3;
+function attemptsHint(state) {
+  return state.tries === 1 ? ' Осталось 2 попытки.' : ' Осталась 1 попытка.';
+}
+const TRAINING_STEPS = [
+  { title: 'Заметь нарушение', question: 'Час пик. Ты видишь, как сотрудник достаёт картошку за 10 секунд до сигнала. На что обратишь внимание?', options: ['Очередь движется быстро — станция работает хорошо.', 'Картошку достали до сигнала: процедура приготовления нарушена.', 'Сотрудник явно не хочет работать качественно.'], right: 1, hint: 'Отдели наблюдаемый факт от оценки человека и показателей скорости.', explanation: 'Ты заметил конкретное действие: продукт достали раньше сигнала. С этим фактом можно работать.' },
+  { title: 'Останови риск и отреагируй сразу', question: 'Сотрудник собирается передать эту порцию на сборку. Что сделаешь сейчас?', options: ['Остановлю передачу порции и сразу обращу внимание сотрудника на нарушение.', 'Запомню случай и поговорю после часа пик.', 'Попрошу коллегу понаблюдать, повторится ли нарушение.'], right: 0, hint: 'Пока ты ждёшь, продукт уже может попасть к Гостю. Начни с прекращения неправильного действия.', explanation: 'Сначала останови передачу порции, приготовленной с нарушением, и действуй по процедурам ресторана. Обратную связь дай сразу.' },
+  { title: 'Дай обратную связь по ФПР', question: 'Как скажешь сотруднику о нарушении? Выбери фразу с фактом, последствием и правильным результатом.', options: ['Ты опять торопишься. Сколько можно повторять? Работай нормально!', 'Пожалуйста, будь внимательнее с картошкой — нам важно качество.', 'Ты достал картошку за 10 секунд до сигнала. Она может остаться сырой и не хрустеть. Доставай её только после сигнала готовности.'], right: 2, hint: 'Нужны все три части: что произошло, к чему это приводит и какое действие требуется. Без обвинений и общих пожеланий.', explanation: 'Факт — достал за 10 секунд до сигнала. Последствие — картошка может остаться сырой и не хрустеть. Результат — доставать только после сигнала.' },
+  { title: 'Покажи правильное действие', question: 'Сотрудник отвечает: «Понял, больше не буду». Что дальше?', options: ['Поблагодарю и сразу уйду: обещания достаточно.', 'На следующем цикле покажу выполнение процедуры: дождусь сигнала и затем достану картошку.', 'Попрошу прочитать стандарт после смены вместо демонстрации.'], right: 1, hint: 'На этом шаге сотруднику нужно увидеть, как правильно выполнить процедуру.', explanation: 'Покажи процедуру в работе, чтобы правильное действие было понятно и его можно было повторить.' },
+  { title: 'Дай потренироваться', question: 'Ты показал процедуру. Как убедишься, что сотрудник способен повторить её?', options: ['Попрошу повторить процедуру под наблюдением; если не получается, подключу Тренера-наставника.', 'Спрошу «Всё понятно?» и приму ответ «Да» как подтверждение навыка.', 'До конца смены буду готовить за него.'], right: 0, hint: 'Понимать объяснение и самостоятельно выполнять действие — разные вещи. Нужна практика.', explanation: 'Дай сотруднику выполнить процедуру самому. Если трудность сохраняется, организуй обучение с Тренером-наставником.' },
+  { title: 'Передай информацию коллегам', question: 'Что сообщишь коллегам, которые будут контролировать работу сотрудника?', options: ['Ничего: разговор уже состоялся, вопрос закрыт.', '«Он постоянно портит качество, следите за ним внимательнее».', '«Сегодня он достал картошку раньше сигнала. Я дал ОС по ФПР, показал процедуру и проверил повторение. Понаблюдайте за соблюдением времени приготовления».'], right: 2, hint: 'Передай факт, предпринятые действия и предмет дальнейшего наблюдения. Оценка личности не помогает контролю.', explanation: 'Коллегам нужны конкретные сведения о нарушении и обучении, чтобы поддерживать единый стандарт и продолжать наблюдение.' },
+  { title: 'Вернись и проверь', question: 'Через несколько дней ты снова работаешь с этим сотрудником. Чем завершишь цикл?', options: ['Спрошу, помнит ли он разговор: если помнит, всё исправлено.', 'Понаблюдаю за приготовлением: дожидается ли он сигнала. Если ошибка повторится, снова отреагирую и организую отработку.', 'Посмотрю только на отзывы Гостей: отсутствие жалоб означает, что всё хорошо.'], right: 1, hint: 'Проверь действие в реальной работе. Воспоминание о разговоре и отсутствие жалоб не подтверждают соблюдение процедуры.', explanation: 'Цикл завершает проверка поведения на станции. Если ошибка повторилась, нужно снова остановить нарушение и помочь закрепить правильное действие.' }
+];
+let learning = freshLearning();
+function freshLearning() { return { seen: [], answers: {}, shift: [], order: [], trainerStep: 0 }; }
+function answerState(id) { return learning.answers[id] || { tries: 0, done: false }; }
+function quizConfig(id) {
+  if (id.startsWith('trainer-')) {
+    const s = TRAINING_STEPS[Number(id.slice(8))];
+    return { ...s, selector: '#trainer-options button', feedback: 'trainer-feedback' };
+  }
+  const configs = {
+    intro: { selector: '#intro-choice .choice-row button', feedback: 'intro-feedback', right: 1, hint: 'Подумай не только о впечатлении Гостя, но и о его здоровье и жизни.', explanation: 'Даже одно пропущенное нарушение может привести к угрозе жизни.' },
+    'match-0': { selector: '#page-consequences .match-question:nth-child(1) .match-btn', feedback: 'match-feedback-0', right: 1, hint: 'Для запуска цепочки не обязательно ждать повторения или заметных последствий.', explanation: 'Даже одно пропущенное нарушение может запустить опасную цепочку.' },
+    'match-1': { selector: '#page-consequences .match-question:nth-child(2) .match-btn', feedback: 'match-feedback-1', right: 2, hint: 'Найди самый полный диапазон: от реакции Гостя до крайнего последствия для его жизни.', explanation: 'Последствия могут быть от огорчения Гостя до больницы и смерти.' }
+  };
+  return configs[id];
+}
+function submitChoice(id, choice) {
+  if (answerState(id).done) return;
+  const cfg = quizConfig(id);
+  const correct = choice === cfg.right;
+  const tries = answerState(id).tries + 1;
+  learning.answers[id] = { tries, choice, correct, done: correct || tries >= MAX_ATTEMPTS };
+  renderChoice(id);
+  refreshLearning();
+}
+function renderChoice(id) {
+  const cfg = quizConfig(id), state = answerState(id);
+  const options = [...document.querySelectorAll(cfg.selector)];
+  options.forEach((btn, i) => {
+    btn.disabled = state.done;
+    btn.classList.toggle('correct-pick', state.done && i === cfg.right);
+    btn.classList.toggle('wrong-pick', state.tries > 0 && !state.correct && i === state.choice);
+    btn.setAttribute('aria-pressed', String(state.choice === i));
+  });
+  const fb = document.getElementById(cfg.feedback);
+  if (!state.tries) { fb.className = 'feedback-box'; fb.textContent = ''; return; }
+  fb.className = 'feedback-box show ' + (state.done ? 'correct' : 'incorrect');
+  fb.textContent = state.correct ? 'Верно. ' + cfg.explanation
+    : state.done ? 'Три попытки использованы. Верный вариант: «' + options[cfg.right].textContent + '». ' + cfg.explanation + ' Можно продолжить после выполнения остальных заданий раздела.'
+    : 'Пока неверно. Подсказка: ' + cfg.hint + attemptsHint(state);
+}
+function revealIntro(btn, isCorrect) { submitChoice('intro', isCorrect ? 1 : 0); }
+function pickMatch(btn, index, answer) { submitChoice('match-' + index, ['a', 'b', 'c'].indexOf(answer)); }
+function recordReveal(btn) {
+  const id = btn.dataset.revealId;
+  if (id && !learning.seen.includes(id)) learning.seen.push(id);
+  btn.classList.add('was-read');
+  refreshLearning();
+}
+function selectConsequence(btn, text) {
+  document.querySelectorAll('.pyramid-level').forEach(el => el.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('pyramid-detail').textContent = text;
+  recordReveal(btn);
+}
+function toggleChain(btn) {
+  const open = btn.getAttribute('aria-expanded') !== 'true';
+  btn.classList.toggle('open', open);
+  btn.nextElementSibling.classList.toggle('open', open);
+  btn.setAttribute('aria-expanded', String(open));
+  if (open) recordReveal(btn);
+}
+function revealRequirements(chapter) {
+  return [...document.querySelectorAll('#page-' + chapter + ' .pyramid-level, #page-' + chapter + ' .chain-toggle')];
+}
+function chapterReady(chapter) {
+  if (!revealRequirements(chapter).every(btn => learning.seen.includes(btn.dataset.revealId))) return false;
+  if (chapter === 'intro') return answerState('intro').done;
+  if (chapter === 'consequences') return answerState('match-0').done && answerState('match-1').done;
+  if (chapter === 'control') return learning.shift.length > 0;
+  if (chapter === 'algorithm') return answerState('sort').done && TRAINING_STEPS.every((_, i) => answerState('trainer-' + i).done);
+  if (chapter === 'system') return answerState('system').done;
+  return false;
+}
+function refreshLearning(persist = true) {
+  Object.keys(chapterDone).forEach(id => { chapterDone[id] = !!chapterReady(id); });
+  const first = CHAPTER_ORDER.findIndex(id => !chapterDone[id]);
+  unlockedChapters = first < 0 ? CHAPTER_ORDER.length : first + 1;
+  applyHomeLocks();
+  Object.keys(chapterDone).forEach(id => {
+    const page = document.getElementById('page-' + id);
+    const btn = page.querySelector('.next-row .btn-next');
+    const status = page.querySelector('.chapter-gate');
+    const reveals = revealRequirements(id);
+    const read = reveals.filter(el => learning.seen.includes(el.dataset.revealId)).length;
+    btn.disabled = !chapterDone[id];
+    btn.setAttribute('aria-disabled', String(btn.disabled));
+    let text = chapterDone[id] ? 'Раздел пройден. Можно идти дальше.' : 'Выполни задания раздела: верный ответ или разбор после трёх попыток откроет переход.';
+    if (read < reveals.length) {
+      const unread = reveals.filter(el => !learning.seen.includes(el.dataset.revealId)).map(el => el.querySelector('strong, span')?.textContent.trim() || el.textContent.trim());
+      text = 'Раскрой все тексты: просмотрено ' + read + ' из ' + reveals.length + '. Ещё не просмотрены: ' + unread.join('; ') + '. Затем заверши задания раздела.';
+    }
+    if (id === 'algorithm' && !chapterDone[id]) text = 'Собери порядок действий и пройди тренажёр: завершено ' + TRAINING_STEPS.filter((_, i) => answerState('trainer-' + i).done).length + ' из 7 шагов.';
+    if (id === 'control' && !chapterDone[id]) text = 'Отметь нарушения, которые встречаются на твоей смене, и сохрани выбор.';
+    status.textContent = text;
+  });
+  if (persist) saveProgress();
+}
+function completeChapter() { refreshLearning(); }
+function goNext(from, to) {
+  refreshLearning();
+  if (!chapterReady(from)) return;
+  navigateTo(to);
+}
+function collectState() {
+  return { version: PROGRESS_VERSION, learning };
+}
+function loadProgress() {
+  let json = '';
+  try { if (window.SCORM) json = SCORM.get('cmi.suspend_data') || ''; } catch (e) {}
+  try { if (!json) json = localStorage.getItem(PROGRESS_KEY) || ''; } catch (e) {}
+  try {
+    const s = JSON.parse(json || '{}');
+    if (s.version === PROGRESS_VERSION && s.learning && Array.isArray(s.learning.seen) && Array.isArray(s.learning.shift) && Array.isArray(s.learning.order) && s.learning.answers && typeof s.learning.answers === 'object') {
+      learning = s.learning;
+      learning.trainerStep = Math.max(0, Math.min(6, Number(learning.trainerStep) || 0));
+      const firstPending = TRAINING_STEPS.findIndex((_, i) => !answerState('trainer-' + i).done);
+      if (firstPending >= 0) learning.trainerStep = Math.min(learning.trainerStep, firstPending);
+    }
+  } catch (e) { learning = freshLearning(); }
+  ['intro', 'match-0', 'match-1'].forEach(renderChoice);
+  document.querySelectorAll('[data-reveal-id]').forEach(btn => btn.classList.toggle('was-read', learning.seen.includes(btn.dataset.revealId)));
+  document.querySelectorAll('#shift-practice .closed-choice').forEach(btn => btn.classList.toggle('selected', learning.shift.includes(btn.dataset.key)));
+  if (learning.shift.length) showShiftFeedback();
+  restoreSort();
+  restoreSystem();
+  renderTrainer();
+  refreshLearning(false);
+}
+function resetProgressForNewAttempt() {
+  learning = freshLearning();
+  try { localStorage.removeItem(PROGRESS_KEY + '_completed'); } catch (e) {}
+  refreshLearning();
+  loadProgress();
+}
+function showShiftFeedback() {
+  const fb = document.getElementById('shift-feedback');
+  fb.className = 'feedback-box show correct';
+  fb.textContent = 'Выбор сохранён. Используй его, чтобы определить, за чем наблюдать на смене.';
+}
+function checkShiftChoices() {
+  const selected = [...document.querySelectorAll('#shift-practice .closed-choice.selected')];
+  if (!selected.length) {
+    const fb = document.getElementById('shift-feedback');
+    fb.className = 'feedback-box show incorrect';
+    fb.textContent = 'Выбери хотя бы один вариант. Здесь нет правильных или неправильных ответов.';
+    return;
+  }
+  learning.shift = selected.map(btn => btn.dataset.key);
+  showShiftFeedback();
+  refreshLearning();
+}
+function sortOrder() { return [...document.querySelectorAll('#sortable-list .sort-item')].map(el => Number(el.dataset.idx)); }
+function checkSortOrder() {
+  if (answerState('sort').done) return;
+  learning.order = sortOrder();
+  const correct = CORRECT_ORDER.every((v, i) => v === learning.order[i]);
+  const tries = answerState('sort').tries + 1;
+  learning.answers.sort = { tries, correct, done: correct || tries >= MAX_ATTEMPTS };
+  if (answerState('sort').done) learning.order = CORRECT_ORDER.slice();
+  restoreSort();
+  refreshLearning();
+}
+function restoreSort() {
+  const list = document.getElementById('sortable-list'), state = answerState('sort');
+  learning.order.forEach(id => { const el = list.querySelector('[data-idx="' + id + '"]'); if (el) list.appendChild(el); });
+  list.classList.toggle('exercise-done', !!state.done);
+  list.querySelectorAll('.sort-item').forEach(el => { el.draggable = !state.done; });
+  list.querySelectorAll('button').forEach(btn => { btn.disabled = !!state.done; });
+  document.querySelector('[onclick="checkSortOrder()"]').disabled = !!state.done;
+  const fb = document.getElementById('sort-feedback');
+  if (!state.tries) return;
+  fb.className = 'feedback-box show ' + (state.done ? 'correct' : 'incorrect');
+  fb.textContent = state.correct ? 'Верно. Теперь примени эти семь шагов в тренажёре ниже.' : state.done ? 'Три попытки использованы. Карточки расставлены в верном порядке: заметь → останови риск → дай ОС по ФПР → покажи → потренируй → передай информацию → проверь через несколько дней. Теперь пройди тренажёр.' : 'Подсказка: сначала обнаружь нарушение и останови риск; после объяснения нужны показ и практика. Цикл заканчивается проверкой через несколько дней.' + attemptsHint(state);
+}
+function moveSort(item, direction) {
+  if (answerState('sort').done) return;
+  const sibling = direction < 0 ? item.previousElementSibling : item.nextElementSibling;
+  if (sibling) direction < 0 ? sibling.before(item) : sibling.after(item);
+  learning.order = sortOrder();
+  saveProgress();
+}
+function pickSystemChoice(btn) {
+  if (answerState('system').done) return;
+  btn.closest('.control-choice-group').querySelectorAll('.system-choice').forEach(el => el.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+function checkControlCycle() {
+  if (answerState('system').done) return;
+  const selected = [...document.querySelectorAll('#control-practice .system-choice.selected')];
+  const fb = document.getElementById('control-feedback');
+  if (selected.length !== 3) {
+    fb.className = 'feedback-box show incorrect';
+    fb.textContent = 'Выбери действие для каждого из трёх этапов. Попытка ещё не использована.';
+    return;
+  }
+  const correct = selected.every(btn => btn.dataset.choice === 'right');
+  const tries = answerState('system').tries + 1;
+  learning.answers.system = { tries, correct, done: correct || tries >= MAX_ATTEMPTS, choice: selected.map(btn => btn.dataset.choice) };
+  restoreSystem();
+  refreshLearning();
+}
+function restoreSystem() {
+  const state = answerState('system');
+  document.querySelectorAll('#control-practice .control-choice-group').forEach((group, i) => {
+    group.querySelectorAll('button').forEach(btn => {
+      btn.disabled = !!state.done;
+      btn.classList.toggle('selected', state.choice?.[i] === btn.dataset.choice);
+      btn.classList.toggle('correct-pick', !!state.done && btn.dataset.choice === 'right');
+    });
+  });
+  document.querySelector('[onclick="checkControlCycle()"]').disabled = !!state.done;
+  const fb = document.getElementById('control-feedback');
+  if (!state.tries) return;
+  fb.className = 'feedback-box show ' + (state.done ? 'correct' : 'incorrect');
+  fb.textContent = state.correct ? 'Верно. Наблюдение, реакция и проверка работают как единый цикл.' : state.done ? 'Три попытки использованы. Верные действия выделены: регулярно проверяй соблюдение стандартов, сразу давай ОС по ФПР, вернись через несколько дней и проверь работу сотрудника. Можно идти дальше.' : 'Подсказка: наблюдай в течение смены, реагируй в момент нарушения, а усвоение процедуры проверяй в работе через несколько дней.' + attemptsHint(state);
+}
+function renderTrainer() {
+  const i = learning.trainerStep, step = TRAINING_STEPS[i];
+  document.getElementById('trainer-progress').textContent = 'Шаг ' + (i + 1) + ' из 7 · ' + step.title;
+  document.getElementById('trainer-question').textContent = step.question;
+  const options = document.getElementById('trainer-options');
+  options.replaceChildren();
+  step.options.forEach((text, choice) => {
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'match-btn'; btn.textContent = text;
+    btn.addEventListener('click', () => { submitChoice('trainer-' + i, choice); updateTrainerNext(); });
+    options.appendChild(btn);
+  });
+  renderChoice('trainer-' + i);
+  updateTrainerNext();
+}
+function updateTrainerNext() {
+  const btn = document.getElementById('trainer-next');
+  btn.disabled = !answerState('trainer-' + learning.trainerStep).done;
+  btn.hidden = learning.trainerStep === 6;
+  document.getElementById('trainer-summary').hidden = !TRAINING_STEPS.every((_, i) => answerState('trainer-' + i).done);
+}
+function nextTrainerStep() {
+  if (!answerState('trainer-' + learning.trainerStep).done || learning.trainerStep >= 6) return;
+  learning.trainerStep++;
+  renderTrainer(); saveProgress();
+  document.getElementById('trainer-question').focus({ preventScroll: true });
+  document.getElementById('shift-trainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.pyramid-level, .chain-toggle').forEach((btn, i) => { btn.dataset.revealId = 'text-' + i; });
+  Object.keys(chapterDone).forEach(id => {
+    const row = document.querySelector('#page-' + id + ' .next-row');
+    const status = document.createElement('p');
+    status.className = 'chapter-gate'; status.id = 'gate-' + id; status.setAttribute('role', 'status');
+    row.before(status);
+    row.querySelector('button').setAttribute('aria-describedby', status.id);
+  });
+  document.querySelectorAll('#sortable-list .sort-item').forEach(item => {
+    const controls = document.createElement('span'); controls.className = 'sort-controls';
+    [-1, 1].forEach(dir => {
+      const btn = document.createElement('button'); btn.type = 'button'; btn.textContent = dir < 0 ? '↑' : '↓';
+      btn.setAttribute('aria-label', (dir < 0 ? 'Выше: ' : 'Ниже: ') + item.children[1].textContent);
+      btn.addEventListener('click', () => moveSort(item, dir)); controls.appendChild(btn);
+    });
+    item.appendChild(controls);
+  });
+  const list = document.getElementById('sortable-list');
+  ['dragstart', 'touchstart', 'touchend', 'drop'].forEach(type => list.addEventListener(type, event => {
+    if (answerState('sort').done) { event.preventDefault(); event.stopImmediatePropagation(); }
+  }, true));
+  ['drop', 'touchend'].forEach(type => list.addEventListener(type, () => { learning.order = sortOrder(); saveProgress(); }));
+  renderTrainer();
+  refreshLearning(false);
+});
