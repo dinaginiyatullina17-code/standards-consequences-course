@@ -129,8 +129,7 @@ function refreshLearning(persist = true) {
     let text = chapterDone[id] ? '' : 'Пройди тест выше.';
     status.hidden = chapterDone[id];
     if (read < reveals.length) {
-      const unread = reveals.filter(el => !learning.seen.includes(el.dataset.revealId)).map(el => el.querySelector('strong, span')?.textContent.trim() || el.textContent.trim());
-      text = 'Раскрой все тексты: просмотрено ' + read + ' из ' + reveals.length + '. Ещё не просмотрены: ' + unread.join('; ') + '. Затем заверши задания раздела.';
+      text = 'Раскрой все примеры и пройди тест.';
     }
     if (id === 'algorithm' && !chapterDone[id]) text = 'Собери порядок действий и пройди тренажёр: завершено ' + TRAINING_STEPS.filter((_, i) => answerState('trainer-' + i).done).length + ' из 7 шагов.';
     if (id === 'control' && !chapterDone[id]) text = 'Отметь нарушения, которые встречаются на твоей смене, и сохрани выбор.';
