@@ -497,8 +497,14 @@ function resetZonePool(poolId, ...zoneIds) {
 /* Финальный шаг курса. Явно отправляем SCORM 1.2-статус passed и сохраняем
    локальный флаг, чтобы результат был виден и при локальном открытии. */
 function completeCourse() {
-  if (!Object.keys(chapterDone).every(id => chapterReady(id))) return;
-  if (typeof finalQuizReady === 'function' && !finalQuizReady()) return;
+  const status = document.getElementById('final-quiz-status');
+  if (typeof finalQuizReady === 'function' && !finalQuizReady()) {
+    if (status) {
+      status.textContent = 'Сначала заверши итоговый тест.';
+      status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return;
+  }
   try { localStorage.setItem(PROGRESS_KEY + '_completed', 'passed'); } catch (e) {}
   try {
     if (window.SCORM && typeof SCORM.complete === 'function') {
@@ -515,13 +521,7 @@ function completeCourse() {
     button.disabled = true;
     button.setAttribute('aria-disabled', 'true');
   }
-
-  setTimeout(() => {
-    try {
-      window.open('', '_self');
-      window.close();
-    } catch (e) {}
-  }, 350);
+  if (status) status.textContent = 'Курс завершён.';
 }
 
 
