@@ -751,7 +751,7 @@ main { padding-top: 52px; }
 .chain-infographic__head h4 { margin: 0; font-family: var(--font-head); font-size: clamp(22px, 3vw, 28px); line-height: 1.1; }
 .chain-infographic__head > strong { color: var(--c-ink); font-family: var(--font-head); font-size: clamp(22px, 3vw, 28px); line-height: 1.1; }
 .chain-infographic__head span { color: #9b8276; font-size: 13px; text-align: right; }
-.chain-infographic__head .chain-kf { color: var(--c-brand-dk); font-size: 14px; font-weight: 700; line-height: 1.35; text-align: left; }
+.chain-infographic__head .chain-kf { margin-left: 18px; color: var(--c-brand-dk); font-size: 14px; font-weight: 700; line-height: 1.35; text-align: left; }
 .chain-toggle { width: 100%; display: flex; align-items: center; gap: 16px; padding: 0; border: 0; background: transparent; color: inherit; cursor: pointer; text-align: left; }
 .chain-toggle:hover .chain-infographic__head > strong { color: var(--c-brand-dk); }
 .chain-toggle:focus-visible { outline-offset: 6px; }
@@ -921,6 +921,7 @@ main { padding-top: 52px; }
   .chain-infographic { padding: 20px; }
   .chain-infographic__head { display: block; }
   .chain-infographic__head span { display: block; margin-top: 6px; text-align: left; }
+  .chain-infographic__head .chain-kf { margin-left: 12px; }
   .chain-flow { display: flex; flex-direction: column; gap: 7px; }
   .chain-step { min-height: 0; }
   .chain-arrow { min-height: 24px; transform: rotate(90deg); }
