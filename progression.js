@@ -148,7 +148,7 @@ function refreshLearning(persist = true) {
     let text = chapterDone[id] ? '' : 'Пройди тест выше.';
     status.hidden = chapterDone[id];
     if (read < reveals.length) {
-      text = 'Раскрой все примеры и пройди тест.';
+      text = 'Изучи все примеры и пройди тест.';
     }
     if (id === 'algorithm' && !chapterDone[id]) text = 'Собери порядок действий и пройди тренажёр: завершено ' + TRAINING_STEPS.filter((_, i) => answerState('trainer-' + i).done).length + ' из 7 шагов.';
     if (id === 'control' && !chapterDone[id]) text = 'Отметь нарушения, которые встречаются на твоей смене, и сохрани выбор.';
