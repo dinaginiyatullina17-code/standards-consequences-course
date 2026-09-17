@@ -295,6 +295,24 @@ function restoreSystem() {
 }
 function renderTrainer() {
   const i = learning.trainerStep, step = TRAINING_STEPS[i];
+  const stepper = document.getElementById('trainer-stepper');
+  if (stepper) {
+    stepper.replaceChildren();
+    TRAINING_STEPS.forEach((item, index) => {
+      const state = answerState('trainer-' + index);
+      const li = document.createElement('li');
+      li.className = 'trainer-stepper__item ' + (index === i ? 'is-current' : state.done ? 'is-complete' : 'is-upcoming') + (state.done ? ' is-done' : '');
+      if (index === i) li.setAttribute('aria-current', 'step');
+      const marker = document.createElement('span');
+      marker.className = 'trainer-stepper__marker';
+      marker.textContent = state.done && index !== i ? '✓' : String(index + 1);
+      const label = document.createElement('span');
+      label.className = 'trainer-stepper__label';
+      label.textContent = item.title;
+      li.append(marker, label);
+      stepper.appendChild(li);
+    });
+  }
   document.getElementById('trainer-progress').textContent = 'Шаг ' + (i + 1) + ' из 7 · ' + step.title;
   document.getElementById('trainer-question').textContent = step.question;
   const options = document.getElementById('trainer-options');
@@ -309,8 +327,15 @@ function renderTrainer() {
   updateTrainerNext();
 }
 function updateTrainerNext() {
+  const currentItem = document.querySelectorAll('#trainer-stepper .trainer-stepper__item')[learning.trainerStep];
+  const currentDone = answerState('trainer-' + learning.trainerStep).done;
+  if (currentItem) {
+    currentItem.classList.toggle('is-done', currentDone);
+    const marker = currentItem.querySelector('.trainer-stepper__marker');
+    if (marker) marker.textContent = currentDone ? '✓' : String(learning.trainerStep + 1);
+  }
   const btn = document.getElementById('trainer-next');
-  btn.disabled = !answerState('trainer-' + learning.trainerStep).done;
+  btn.disabled = !currentDone;
   btn.hidden = learning.trainerStep === 6;
   document.getElementById('trainer-back').hidden = learning.trainerStep === 0;
   document.getElementById('trainer-summary').hidden = !TRAINING_STEPS.every((_, i) => answerState('trainer-' + i).done);

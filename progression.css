@@ -16,7 +16,7 @@
 .chain-group-icon { display: grid; place-items: center; width: 52px; height: 52px; flex: 0 0 52px; border-radius: 14px; background: #ffffffb3; }
 .chain-group-icon svg { width: 32px; height: 32px; }
 @media (max-width: 600px) { .chain-group-title { padding: 18px 16px; gap: 12px; font-size: 22px; } .chain-group-icon { width: 42px; height: 42px; flex-basis: 42px; } }
-.kf-label { display: block; margin-top: 12px; padding: 8px 10px; border-radius: 10px; background: #ece5fc; color: #49316f; font-size: 13px; line-height: 1.45; font-weight: 700; overflow-wrap: anywhere; }
+.kf-label { display: flex; align-items: center; gap: 7px; margin-top: 12px; padding: 8px 10px; border: 1px solid #d2c8f3; border-radius: 10px; background: #ece5fc; color: #49316f; font-size: 13px; line-height: 1.45; font-weight: 700; overflow-wrap: anywhere; }
 .course-back { margin: 0 auto 0 0; }
 .course-navigation { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
 .course-navigation .btn-next { margin-left: auto; }
@@ -37,6 +37,16 @@
 .trainer-eyebrow { text-transform: uppercase; font-size: 12px; letter-spacing: .1em; }
 .trainer-rules { font-size: 14px; color: #655c75; }
 .trainer-progress { margin-top: 28px; padding-top: 24px; border-top: 1px solid #d7cef2; }
+.trainer-stepper { --step-line: #d8d0ee; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0; margin: 30px 0 10px; padding: 0; list-style: none; }
+.trainer-stepper__item { position: relative; display: grid; justify-items: center; align-content: start; gap: 9px; min-width: 0; color: #777080; text-align: center; }
+.trainer-stepper__item:not(:last-child)::after { content: ''; position: absolute; z-index: 0; top: 17px; left: calc(50% + 18px); width: calc(100% - 36px); height: 4px; border-radius: 999px; background: var(--step-line); }
+.trainer-stepper__item.is-complete:not(:last-child)::after, .trainer-stepper__item.is-current.is-done:not(:last-child)::after { background: #7968e8; }
+.trainer-stepper__marker { position: relative; z-index: 1; display: grid; place-items: center; width: 38px; height: 38px; border: 3px solid #d8d0ee; border-radius: 50%; background: #fff; color: #716a78; font-weight: 850; }
+.trainer-stepper__label { max-width: 110px; font-size: 11px; font-weight: 700; line-height: 1.25; }
+.trainer-stepper__item.is-complete .trainer-stepper__marker, .trainer-stepper__item.is-current.is-done .trainer-stepper__marker { border-color: #7968e8; background: #7968e8; color: #fff; }
+.trainer-stepper__item.is-current { color: #49316f; }
+.trainer-stepper__item.is-current .trainer-stepper__marker { border-color: #7968e8; background: #eee8fc; color: #49316f; box-shadow: 0 0 0 5px rgba(121,104,232,.13); }
+.trainer-stepper__item.is-current.is-done .trainer-stepper__marker { color: #fff; box-shadow: 0 0 0 5px rgba(121,104,232,.13); }
 .shift-trainer .match-options { display: grid; grid-template-columns: 1fr; gap: 12px; }
 .shift-trainer .match-btn { width: 100%; text-align: left; white-space: normal; line-height: 1.5; }
 .shift-trainer .btn-next { margin-top: 24px; }
@@ -47,4 +57,13 @@
 .correct-pick, .system-choice.correct-pick { border-color: #26844c !important; background: #e8f5ed !important; color: #184d2e !important; opacity: 1 !important; }
 .wrong-pick { border-color: #ba4f49 !important; }
 button:focus-visible { outline: 3px solid #7968e8; outline-offset: 3px; }
-@media (max-width: 600px) { .chain-toggle.was-read .chain-infographic__head::after { display: block; margin: 6px 0 0; } .sort-item { flex-wrap: wrap; } .sort-controls { margin-left: auto; } }
+@media (max-width: 600px) {
+  .chain-toggle.was-read .chain-infographic__head::after { display: block; margin: 6px 0 0; }
+  .sort-item { flex-wrap: wrap; }
+  .sort-controls { margin-left: auto; }
+  .trainer-stepper { grid-template-columns: 1fr; gap: 0; margin-top: 24px; }
+  .trainer-stepper__item { grid-template-columns: 38px 1fr; justify-items: start; align-items: center; gap: 12px; min-height: 58px; text-align: left; }
+  .trainer-stepper__item:not(:last-child)::after { top: 38px; left: 17px; width: 4px; height: 20px; }
+  .trainer-stepper__label { max-width: none; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) { .fpr-card { opacity: 1; transform: none; animation: none !important; } }
