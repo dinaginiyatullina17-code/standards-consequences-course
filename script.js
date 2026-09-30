@@ -513,7 +513,7 @@ function completeCourse() {
       completedInScorm = true;
     } else if (window.SCORM && typeof SCORM.set === 'function') {
       SCORM.set('cmi.core.lesson_status', 'passed');
-      SCORM.set('cmi.core.exit', '');
+      SCORM.set('cmi.core.exit', 'logout');
       if (typeof SCORM.commit === 'function') SCORM.commit();
       if (typeof SCORM.finish === 'function') SCORM.finish();
       completedInScorm = true;
