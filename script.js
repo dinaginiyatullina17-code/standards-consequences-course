@@ -519,15 +519,9 @@ function completeCourse() {
           if (typeof SCORM.commit === 'function') SCORM.commit();
           if (typeof SCORM.finish === 'function') SCORM.finish();
         } catch (e) {}
-        setTimeout(() => {
-          try { window.close(); } catch (e) {}
-        }, 50);
       }, 100);
     } else if (window.SCORM && typeof SCORM.complete === 'function') {
       SCORM.complete();
-      setTimeout(() => {
-        try { window.close(); } catch (e) {}
-      }, 50);
     }
   } catch (e) {}
 
@@ -540,7 +534,7 @@ function completeCourse() {
   if (status) status.textContent = 'Курс завершён.';
 
   /* В SCORM сначала фиксируем passed, затем через 100 мс отправляем logout.
-     Публичная версия курса остаётся на экране подтверждения. */
+     Переходом после LMSFinish управляет сам LMS-плеер. */
 }
 
 
