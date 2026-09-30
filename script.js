@@ -506,17 +506,28 @@ function completeCourse() {
     return;
   }
   try { localStorage.setItem(PROGRESS_KEY + '_completed', 'passed'); } catch (e) {}
-  let completedInScorm = false;
   try {
-    if (window.SCORM && typeof SCORM.complete === 'function') {
-      SCORM.complete();
-      completedInScorm = true;
-    } else if (window.SCORM && typeof SCORM.set === 'function') {
+    if (window.SCORM && typeof SCORM.set === 'function') {
       SCORM.set('cmi.core.lesson_status', 'passed');
-      SCORM.set('cmi.core.exit', 'logout');
+      SCORM.set('cmi.core.score.raw', '100');
+      SCORM.set('cmi.core.score.min', '0');
+      SCORM.set('cmi.core.score.max', '100');
       if (typeof SCORM.commit === 'function') SCORM.commit();
-      if (typeof SCORM.finish === 'function') SCORM.finish();
-      completedInScorm = true;
+      setTimeout(() => {
+        try {
+          SCORM.set('cmi.core.exit', 'logout');
+          if (typeof SCORM.commit === 'function') SCORM.commit();
+          if (typeof SCORM.finish === 'function') SCORM.finish();
+        } catch (e) {}
+        setTimeout(() => {
+          try { window.close(); } catch (e) {}
+        }, 50);
+      }, 100);
+    } else if (window.SCORM && typeof SCORM.complete === 'function') {
+      SCORM.complete();
+      setTimeout(() => {
+        try { window.close(); } catch (e) {}
+      }, 50);
     }
   } catch (e) {}
 
@@ -528,14 +539,8 @@ function completeCourse() {
   }
   if (status) status.textContent = 'Курс завершён.';
 
-  /* LMS обычно открывает SCO в отдельном окне и после LMSFinish направляет
-     ученика на страницу, настроенную при публикации курса. Закрываем только
-     SCORM-окно; публичная версия курса остаётся на экране подтверждения. */
-  if (completedInScorm) {
-    setTimeout(() => {
-      try { window.close(); } catch (e) {}
-    }, 500);
-  }
+  /* В SCORM сначала фиксируем passed, затем через 100 мс отправляем logout.
+     Публичная версия курса остаётся на экране подтверждения. */
 }
 
 
